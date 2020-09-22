@@ -29,7 +29,12 @@ namespace SocialNetworkAPI.Controllers
         [HttpGet]
         public ActionResult<List<Post>> GetAllPostsByProfile(int profileID)
         {
-            return Ok(_postsRepository.GetPostsByProfileID(profileID));
+            List<Post> posts = _postsRepository.GetPostsByProfileID(profileID);
+
+            if (posts is null || posts.Count == 0)
+                return NotFound();
+
+            return Ok(posts);
         }
 
         // api/profile/5/posts/5
