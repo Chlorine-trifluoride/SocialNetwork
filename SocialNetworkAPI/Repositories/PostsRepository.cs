@@ -45,28 +45,6 @@ namespace SocialNetworkAPI.Repositories
             profile.Posts.Add(post);
         }
 
-        public bool PatchPostInProfile(int profileID, int postID, JsonPatchDocument<PostPatch> postPatch)
-        {
-            Post post = GetProfilePostByID(profileID, postID);
-
-            if (post)
-            {
-                // TODO: All of this seems like unnecessary clutter
-                PostPatch patchPost = new PostPatch
-                {
-                    Content = post.Content
-                };
-
-                postPatch.ApplyTo(patchPost);
-
-                post.Content = patchPost.Content;
-
-                return true;
-            }
-
-            return false;
-        }
-
         public bool DeletePostInProfile(int profileID, int postID)
         {
             List<Post> posts = GetPostsByProfileID(profileID);

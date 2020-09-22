@@ -7,15 +7,8 @@ namespace SocialNetworkDataModel
 {
     public class PostPatch
     {
-        [Required] // Not necessariy but should return a more clear error message
-        [MinLength(3)]
-        [MaxLength(300)]
+        [Required]
+        [StringLength(300)] // This is not working correctly
         public string Content { get; set; }
-
-        // Implicit conversion to bool cleans up our code
-        public static implicit operator bool(PostPatch obj)
-        {
-            return !(obj is null);
-        }
     }
 }

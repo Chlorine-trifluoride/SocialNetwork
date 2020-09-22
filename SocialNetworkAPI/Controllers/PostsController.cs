@@ -59,10 +59,25 @@ namespace SocialNetworkAPI.Controllers
         [HttpPatch("{postID:int}")]
         public IActionResult PatchPostInProfileID(int profileID, int postID, [FromBody] JsonPatchDocument<PostPatch> postPatch)
         {
-            if (_postsRepository.PatchPostInProfile(profileID, postID, postPatch))
-                return NoContent();
+            Post post = _postsRepository.GetProfilePostByID(profileID, postID);
 
-            return NotFound();
+            if (!post)
+                return NotFound();
+
+            // TODO: All of this seems like unnecessary clutter
+            PostPatch patchPost = new PostPatch
+            {
+                Content = post.Content
+            };
+
+            postPatch.ApplyTo(patchPost, ModelState);
+
+            if (!ModelState.IsValid) // This is not working correctly
+                return BadRequest();
+
+            post.Content = patchPost.Content;
+
+            return NoContent();
         }
 
         [HttpDelete("{postID}")]
