@@ -70,10 +70,16 @@ namespace SocialNetworkAPI.Controllers
                 Content = post.Content
             };
 
-            postPatch.ApplyTo(patchPost, ModelState);
+            postPatch.ApplyTo(patchPost, ModelState); // This is not working as expected, does not invalidate the model
 
-            if (!ModelState.IsValid) // This is not working correctly
-                return BadRequest();
+            if (patchPost.Content.Length > PostPatch.MAX_LEN ||
+                patchPost.Content.Length < PostPatch.MIN_LEN)
+            {
+                ModelState.AddModelError("Description", "Content length must be between 3 and 300");
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             post.Content = patchPost.Content;
 
