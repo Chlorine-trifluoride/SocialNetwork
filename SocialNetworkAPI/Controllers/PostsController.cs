@@ -75,7 +75,7 @@ namespace SocialNetworkAPI.Controllers
             if (patchPost.Content.Length > PostPatch.MAX_LEN ||
                 patchPost.Content.Length < PostPatch.MIN_LEN)
             {
-                ModelState.AddModelError("Description", "Content length must be between 3 and 300");
+                ModelState.AddModelError("Description", $"Content length must be between {PostPatch.MIN_LEN} and {PostPatch.MAX_LEN}");
             }
 
             if (!ModelState.IsValid)
