@@ -5,19 +5,15 @@ using System.Text;
 
 namespace SocialNetworkDataModel
 {
-    public class Post
+    public class PostPatch
     {
-        // TODO: this probably should not be called ID if it's not GUID, but instead some running number
-        public int ID { get; set; } // THIS IS NOT GLOBALLY UNIQUE IDENTIFIER
-        public DateTime Date { get; set; }
-
         [Required] // Not necessariy but should return a more clear error message
         [MinLength(3)]
         [MaxLength(300)]
         public string Content { get; set; }
 
         // Implicit conversion to bool cleans up our code
-        public static implicit operator bool(Post obj)
+        public static implicit operator bool(PostPatch obj)
         {
             return !(obj is null);
         }
