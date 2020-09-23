@@ -40,6 +40,10 @@
         if (int.TryParse(profileIDString, out int profileID))
         {
             Profile profile = GetProfile(profileID);
+
+            if (!profile)
+                return;
+
             profileName = profile.Name;
             imageURL = profile.ImageURL;
             posts = profile.Posts;
