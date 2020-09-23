@@ -1,0 +1,57 @@
+﻿@page
+@using Microsoft.Extensions.Primitives;
+@using System.Net.Http;
+@using System.Text.Json;
+@using SocialNetworkDataModel; 
+
+@model IndexModel
+
+@functions
+{
+    const string API_URL = "https://localhost:5001/api";
+    HttpClient httpClient = new HttpClient();
+
+
+    List<Profile> GetAllProfiles()
+    {
+        string url = $"{API_URL}/profile";
+
+        using (var response = httpClient.GetAsync(url).Result)
+        {
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            string apiResponse = response.Content.ReadAsStringAsync().Result;
+            List<Profile> profiles = JsonSerializer.Deserialize<List<Profile>>(apiResponse);
+
+            return profiles;
+        }
+    }
+}
+
+@{
+
+    List<Profile> profiles = GetAllProfiles();
+
+    ViewData["Title"] = "Index";
+}
+
+<div class="jumbotron text-center">
+    <h1>Select profile</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        @{
+            for (int i = 0; i < profiles?.Count; i++)
+            {
+                <a href="https://localhost:44310/profile?id=@profiles[i].ID">
+                    <div class="col-sm-4">
+                        <h3>@profiles[i].Name</h3>
+                        <p>Num posts: @profiles[i].Posts.Count"</p>
+                    </div>
+                </a>
+            }
+        }
+    </div>
+</div>
