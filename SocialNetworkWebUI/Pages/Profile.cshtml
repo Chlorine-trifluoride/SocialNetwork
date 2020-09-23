@@ -1,0 +1,68 @@
+﻿@page
+@using Microsoft.Extensions.Primitives;
+@using System.Net.Http;
+@using System.Text.Json;
+@using SocialNetworkDataModel; 
+
+@model ProfileModel
+
+@functions
+{
+    const string API_URL = "https://localhost:5001/api";
+    HttpClient httpClient = new HttpClient();
+
+
+    Profile GetProfile(int profileID)
+    {
+        string url = $"{API_URL}/profile/{profileID}";
+
+        using (var response = httpClient.GetAsync(url).Result)
+        {
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            string apiResponse = response.Content.ReadAsStringAsync().Result;
+            Profile profile = JsonSerializer.Deserialize<Profile>(apiResponse);
+
+            return profile;
+        }
+    }
+}
+
+@{
+    string imageURL = "";
+    string profileName = "Profile Not Found";
+    List<Post> posts = null;
+
+    if (Request.Query.TryGetValue("id", out StringValues value))
+    {
+        string profileIDString = value;
+        if (int.TryParse(profileIDString, out int profileID))
+        {
+            Profile profile = GetProfile(profileID);
+            profileName = profile.Name;
+            imageURL = profile.ImageURL;
+            posts = profile.Posts;
+        }
+    }
+
+    ViewData["Title"] = profileName;
+}
+
+<div class="jumbotron text-center" style="background-image: url('@imageURL')">
+    <h1>Profile of @profileName</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        @{
+            for (int i = 0; i < posts?.Count; i++)
+            {
+                <div class="col-sm-4">
+                    <h3>@posts[i].Content</h3>
+                    <p>@posts[i].Date</p>
+                </div>
+            }
+        }
+    </div>
+</div>

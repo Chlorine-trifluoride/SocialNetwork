@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace SocialNetworkDataModel
 {
@@ -12,6 +13,8 @@ namespace SocialNetworkDataModel
 
         [Required]
         [StringLength(MAX_LEN, MinimumLength = MIN_LEN)] // This is not working correctly
+
+        [JsonPropertyName("content")]
         public string Content { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace SocialNetworkAPI.Utils
                 {
                     ID = 0,
                     Name = "Johannes Kantola",
-                    ImageURL = "http://buuttiexample.com/kuva1.jpg",
+                    ImageURL = "https://discord.com/assets/1cbd08c76f8af6dddce02c5138971129.png",
                     FriendIDs = new List<int>{1, 2},
                     Posts = new List<Post>
                     {
@@ -38,7 +38,7 @@ namespace SocialNetworkAPI.Utils
                 {
                     ID = 1,
                     Name = "Rene Orosz",
-                    ImageURL = "http://buuttiexample.com/kuva2.jpg",
+                    ImageURL = "https://cdn.discordapp.com/avatars/265986828132155392/63b6b517dc38c63154c0c4626a786f46.png?size=128",
                     FriendIDs = new List<int>{0, 2},
                     Posts = new List<Post>
                     {
@@ -60,7 +60,7 @@ namespace SocialNetworkAPI.Utils
                 {
                     ID = 2,
                     Name = "Asiakas Assi",
-                    ImageURL = "http://buuttiexample.com/kuva3.jpg",
+                    ImageURL = "http://www.clker.com/cliparts/e/1/d/1/1513780035272509829example-stamp-vector.med.png",
                     FriendIDs = new List<int>{0, 1},
                     Posts = new List<Post>
                     {
